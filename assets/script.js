@@ -22,11 +22,13 @@ const timer = document.getElementById("timer");
 var currentQuestion = {};
 var acceptAnswers = false;
 var score = 0;
+var correctBonus = 10;
 var questionCounter = 0;
 var availableQuestions = [];
 var startTime = 1;
 var totalTime = startTime * 60;
 var interval;
+
 
 var questions = [
     {
@@ -84,8 +86,9 @@ function startGame(){
    questionCounter = 0;
    score = 0,
    availableQuestions = [...questions];
+   interval = setInterval(setTimer, 1000);
    renderQuestions();
-   setTimer();
+   //setTimer();
     
 };
 
@@ -93,7 +96,11 @@ function startGame(){
 
 function renderQuestions() {   
     //showResults.innerText = "";
-    if(availableQuestions == 0 || questionCounter >= max_questions) {
+    acceptAnswers = true;
+
+    if(availableQuestions.length == 0 || questionCounter >= max_questions) {
+        console.log('availableQuestions', availableQuestions);
+        console.log('questionCounter'. questionCounter);
         return window.location.assign("highScore.html");
     }
 
@@ -108,42 +115,46 @@ function renderQuestions() {
        var number = option.dataset["number"];
        option.innerText = currentQuestion["option" + number];
    });
-
-   availableQuestions.splice(questionIndex, 1);
-   acceptAnswers = true;
+   evaluateAnswer();
 
 };
-
-options.forEach(option => {
-  option.addEventListener("click", e => {
-     if (!acceptAnswers) return;
-      acceptAnswers = false;
-      var selectedOption = e. target;
-      var selectedAnswer = selectedOption.dataset["number"];
-
-      var result = "incorrect";
-        if(selectedAnswer == currentQuestion.answer){
-            result ="correct";
-            showResults.innerText = "Correct";
-            console.log(result);
-        }
-        else {
-            showResults.innerText = "Incorrect";   
-        }
+function evaluateAnswer() {
+    options.forEach(option => {
+        option.addEventListener("click", e => {
+            if (!acceptAnswers) return;
+            acceptAnswers = false;
+            var selectedOption = e. target;
+            var selectedAnswer = selectedOption.dataset["number"];
       
+            var result = "incorrect";
+              if(selectedAnswer == currentQuestion.answer){
+                  result ="correct";
+                  incrementScore(correctBonus);
+                  showResults.innerText = "Correct";
+                  console.log(result);
+              }
+              else {
+                  showResults.innerText = "Incorrect";   
+              }
+             setTimeout(function() {
+                  showResults.innerText = '';
+                  renderQuestions();
+             }, 2000);
+            
+        });
+      
+      });
+      availableQuestions.splice(questionIndex, 1);
       renderQuestions();
-  });
 
-});
+}
+
 
 // Set timer funtion
-interval = setInterval(setTimer, 1000);
-function setTimer() {
-    if(minutes === 0 && seconds === 0) {
-        clearInterval(interval);
-        return window.location.assign("highScore.html");
-    }
 
+function setTimer() {
+ 
+    
   var minutes = Math.floor(totalTime / 60);
   var seconds = totalTime % 60;
   if(seconds < 10){
@@ -151,10 +162,20 @@ function setTimer() {
   }
   timer.innerText = minutes + ':' + seconds;
   totalTime --;
-  console.log(minutes + ':' + seconds);
+  //console.log(minutes + ':' + seconds);
+  
+  if(minutes === 0 && seconds === 0) {
+    clearInterval(interval);
+    return window.location.assign("highScore.html");
+}
 
 }
 
+// incrementScore function
+function incrementScore(num){
+   score+= num;
+   console.log(score);
+}
+incrementScore()
 
-      
-startGame();
+    
