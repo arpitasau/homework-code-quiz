@@ -16,12 +16,17 @@ renderQuestion will be called */
 
 const question = document.getElementById("question");
 const options = Array.from(document.getElementsByClassName("option-text"));
+const showResults = document.getElementById ("show-results");
+const timer = document.getElementById("timer");
 
 var currentQuestion = {};
 var acceptAnswers = false;
 var score = 0;
 var questionCounter = 0;
 var availableQuestions = [];
+var startTime = 1;
+var totalTime = startTime * 60;
+var interval;
 
 var questions = [
     {
@@ -79,14 +84,15 @@ function startGame(){
    questionCounter = 0;
    score = 0,
    availableQuestions = [...questions];
-   console.log(availableQuestions);
    renderQuestions();
+   setTimer();
     
 };
 
 //this function will render questions 
 
-function renderQuestions() {
+function renderQuestions() {   
+    //showResults.innerText = "";
     if(availableQuestions == 0 || questionCounter >= max_questions) {
         return window.location.assign("highScore.html");
     }
@@ -94,7 +100,7 @@ function renderQuestions() {
    questionCounter ++;
    var questionIndex = Math.floor(Math.random() * availableQuestions.length);
    currentQuestion = availableQuestions[questionIndex];
-   console.log(currentQuestion);
+   //console.log(currentQuestion);
    question.innerText = currentQuestion.question;
    //return currentQuestion;
 
@@ -113,10 +119,42 @@ options.forEach(option => {
      if (!acceptAnswers) return;
       acceptAnswers = false;
       var selectedOption = e. target;
-      var selectedAnswer = selectedOption.dataset["number"]
+      var selectedAnswer = selectedOption.dataset["number"];
+
+      var result = "incorrect";
+        if(selectedAnswer == currentQuestion.answer){
+            result ="correct";
+            showResults.innerText = "Correct";
+            console.log(result);
+        }
+        else {
+            showResults.innerText = "Incorrect";   
+        }
+      
       renderQuestions();
   });
 
 });
+
+// Set timer funtion
+interval = setInterval(setTimer, 1000);
+function setTimer() {
+    if(minutes === 0 && seconds === 0) {
+        clearInterval(interval);
+        return window.location.assign("highScore.html");
+    }
+
+  var minutes = Math.floor(totalTime / 60);
+  var seconds = totalTime % 60;
+  if(seconds < 10){
+    seconds = "0" + seconds;
+  }
+  timer.innerText = minutes + ':' + seconds;
+  totalTime --;
+  console.log(minutes + ':' + seconds);
+
+}
+
+
       
 startGame();
