@@ -1,36 +1,29 @@
-/* 1. create index.html page with heading, description and a button
-2. create highScore.html page
-3. css
-4. js
+/* 
+    1. create index.html page with heading, description and a button
+    2. create highScore.html page
+    3. css
+    4. js
 
-Create an array to hold the question and answer.
-1. function renderQuestion, to display questions with 4 answer choise
+    Create an array to hold the question and answer.
+    1. function renderQuestion, to display questions with 4 answer choise
 
-2. function checkAnswer to check the answer
+    2. function checkAnswer to check the answer
 
-3. function setTimer to track the time
+    3. function setTimer to track the time
 
-add event listener click to start button
-setTimer will be called
-renderQuestion will be called */
-
+    add event listener click to start button
+    setTimer will be called
+    renderQuestion will be called 
+*/
+localStorage.setItem("score", 0);
 const question = document.getElementById("question");
 const options = Array.from(document.getElementsByClassName("option-text"));
 const showResults = document.getElementById ("show-results");
 const timer = document.getElementById("timer");
 var userScore = document.getElementById("user-score");
 const startbtn = document.getElementsByClassName("btn");
-var choice = document.getElementsByClassName("option-text");
 
-var currentQuestion = {};
-var acceptAnswers = false;
-var score = 0;
-var correctBonus = 10;
-var questionCounter = 0;
-var availableQuestions = [];
-var startTime = 1;
-var totalTime = startTime * 60;
-var interval = setInterval(setTimer, 1000);
+var currentQuestion = {}, acceptAnswers = false, score = 0, correctBonus = 10, questionCounter = 0, availableQuestions = [], startTime = 1, totalTime = startTime * 60, interval = setInterval(setTimer, 1000);
 
 var questions = [
     {
@@ -82,8 +75,7 @@ var questions = [
 const correct_bonus = 10;
 const max_questions = 5;
 
-// the function will start the game
-//startbtn.addEventListener('click', startGame);
+// this function will start the game
 function startGame(){
    questionCounter = 0;
    score = 0,
@@ -92,17 +84,13 @@ function startGame(){
 };
 
 //this function will render questions 
-
 function renderQuestions() {   
     acceptAnswers = true;
 
     if(availableQuestions.length == 0 || questionCounter >= max_questions) {
-        console.log('availableQuestions', availableQuestions);
-        console.log('questionCounter'. questionCounter);
-        //return window.location.assign("highscore.html");
-        location.href = "highscore.html";
+        location.href = "score.html";
+        document.getElementById('timer').style.display = 'none';
         userScore.innerText = score;
-
     }
 
    questionCounter ++;
@@ -125,23 +113,18 @@ options.forEach(option => {
         var selectedAnswer = selectedOption.dataset["number"];
     
         var result = "incorrect";
-            if(selectedAnswer == currentQuestion.answer){
-                result ="correct";
-                incrementScore(correctBonus);
-                showResults.innerText = "Correct";
-                console.log(result);
-            }
-            else {
-                showResults.innerText = "Incorrect";   
-            }
-            setTimeout(function() {
-                showResults.innerText = '';
-                renderQuestions();
-            }, 2000);
+        if(selectedAnswer == currentQuestion.answer) {
+            result = "correct";
             incrementScore(correctBonus);
+            showResults.innerText = "Correct";
+        } else {
+            showResults.innerText = "Incorrect";   
+        }
+        setTimeout(function() {
+            showResults.innerText = '';
             renderQuestions();
+        }, 2000);
     });
-    
 });
 
 
@@ -155,31 +138,21 @@ function setTimer() {
         seconds = "0" + seconds;
     }
     timer.innerText = minutes + ':' + seconds;
-    //Modified the condition used '==' instead of '===' and for second used "00" instead of 0 and moved totalTime -- below
     if(minutes == "0" && seconds == "00") {  
         clearInterval(interval);
         totalTime = 0;
-        return window.location.assign("highscore.html");
-        
+        return window.location.assign("score.html");
     }
-    totalTime --;
-    //console.log(minutes + ':' + seconds);
+    totalTime -- ;
 }
 
-// incrementScore function
+// IncrementScore function
 function incrementScore(num){
    score += num;
    console.log(score);
-   //userScore.innerText = score;
+   localStorage.setItem("score", score);
 }
-function toggle() {
-    var x = document.getElementById("timer");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-    } else {
-      x.style.display = "none";
-    }
-  }
+
 
       
 
