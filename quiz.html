@@ -8,14 +8,12 @@
 </head>
            
 <body onload="startGame()">
-    
-    <div id="highscoreTimer">
-        <a href="highscore.html"><h4>View Highscore</h4></a>
-        <p>
-            <h4>Time: <span id="timer"></span></h4>
-        </p>
-    </div>
-    <div class="container-fluid">
+    <!--This section is for the timer-->
+    <section id="time-count">
+           <h4 id="time">Time: <span id="timer"></span></h4>
+    </section>
+    <!--Main container to display the questions and options-->
+    <section class="container-fluid">
         <div id="game" class="justify-center">
             <h2 id="question">Please answer the question</h2>
             <div class="choice-container">
@@ -25,20 +23,20 @@
             <div class="choice-container">
                 <p class="option-number">B</p>
                 <p class="option-text" data-number="2">Option2</p>
-             </div>
-             <div class="choice-container">
+            </div>
+            <div class="choice-container">
                 <p class="option-number">C</p>
                 <p class="option-text" data-number="3">Option3</p>
-             </div>
-             <div class="choice-container">
+            </div>
+            <div class="choice-container">
                 <p class="option-number">D</p>
                 <p class="option-text" data-number="4">Option4</p>
-             </div>
-             <p id="show-results"></p>
+            </div>
+            <!--This p tags displays the result-->
+             <p id="show-results-correct"></p>
+             <p id="show-results-incorrect"></p>
         </div>
-        
-    
-    </div>
+    </section>
     <script src = "assets/js/quiz.js"></script>
 </body>
 </html>

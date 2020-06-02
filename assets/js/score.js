@@ -14,11 +14,12 @@ function submitHighScore(event){
     event.preventDefault();
 
   var recentScore = {
-    recentScore : Math.floor(Math.random()*100),
+    recentScore : score,
     name : userInitial.value,
   };
  highScore.push(recentScore);
  localStorage.setItem("highScore", JSON.stringify(highScore));
  location.href = "home.html";
- console.log(recentScore);
+
+
 };

@@ -1,30 +1,15 @@
-/* 
-    1. create index.html page with heading, description and a button
-    2. create highScore.html page
-    3. css
-    4. js
-
-    Create an array to hold the question and answer.
-    1. function renderQuestion, to display questions with 4 answer choise
-
-    2. function checkAnswer to check the answer
-
-    3. function setTimer to track the time
-
-    add event listener click to start button
-    setTimer will be called
-    renderQuestion will be called 
-*/
-localStorage.setItem("score", 0);
+//selecting the DOM element
 const question = document.getElementById("question");
 const options = Array.from(document.getElementsByClassName("option-text"));
-const showResults = document.getElementById ("show-results");
+const showResultsCorrect = document.getElementById ("show-results-correct");
+const showResultsInCorrect = document.getElementById ("show-results-incorrect");
 const timer = document.getElementById("timer");
 var userScore = document.getElementById("user-score");
 const startbtn = document.getElementsByClassName("btn");
 
-var currentQuestion = {}, acceptAnswers = false, score = 0, correctBonus = 10, questionCounter = 0, availableQuestions = [], startTime = 1, totalTime = startTime * 60, interval = setInterval(setTimer, 1000);
-
+//declaring the variables
+var currentQuestion = {}, acceptAnswers = false, score = 0, correctBonus = 10, questionCounter = 0, availableQuestions = [], startTime = 1, totalTime = startTime * 60, interval = setInterval(setTimer, 1000); correct_bonus = 10; max_questions = 5;
+//Storing question and options in array
 var questions = [
     {
         question: "Choose the correct HTML element to define emphasized text.",
@@ -72,8 +57,6 @@ var questions = [
     },
 ]
 
-const correct_bonus = 10;
-const max_questions = 5;
 
 // this function will start the game
 function startGame(){
@@ -116,21 +99,19 @@ options.forEach(option => {
         if(selectedAnswer == currentQuestion.answer) {
             result = "correct";
             incrementScore(correctBonus);
-            showResults.innerText = "Correct";
+            showResultsCorrect.innerText = "Correct";
         } else {
-            showResults.innerText = "Incorrect";   
+            showResultsInCorrect.innerText = "Incorrect";   
         }
         setTimeout(function() {
-            showResults.innerText = '';
+            showResultsCorrect.innerText = '';
+            showResultsInCorrect.innerText = '';
             renderQuestions();
         }, 2000);
     });
 });
 
-
-
 // Set timer funtion
-
 function setTimer() {
     var minutes = Math.floor(totalTime / 60);
     var seconds = totalTime % 60;
@@ -146,7 +127,7 @@ function setTimer() {
     totalTime -- ;
 }
 
-// IncrementScore function
+// Score calculation and storing them in local storage
 function incrementScore(num){
    score += num;
    console.log(score);
