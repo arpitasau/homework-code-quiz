@@ -82,3 +82,20 @@ margin: 0px;
 .option-text{
     width: 100%;
 }
+h3 {
+    text-align: center;
+}
+h5 {
+    text-align: center;
+}
+h1 {
+    text-align: center;
+}
+form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+input {
+   padding: 5px;
+}
