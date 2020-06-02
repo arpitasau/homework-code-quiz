@@ -1,3 +1,4 @@
+localStorage.setItem("score", 0);
 //selecting the DOM element
 const question = document.getElementById("question");
 const options = Array.from(document.getElementsByClassName("option-text"));
@@ -8,7 +9,7 @@ var userScore = document.getElementById("user-score");
 const startbtn = document.getElementsByClassName("btn");
 
 //declaring the variables
-var currentQuestion = {}, acceptAnswers = false, score = 0, correctBonus = 10, questionCounter = 0, availableQuestions = [], startTime = 1, totalTime = startTime * 60, interval = setInterval(setTimer, 1000); correct_bonus = 10; max_questions = 5;
+var currentQuestion = {}, acceptAnswers = false, score = 0, correctBonus = 10, questionCounter = 0, availableQuestions = [], startTime = 1, totalTime = startTime * 60, interval = setInterval(setTimer, 1000); 
 //Storing question and options in array
 var questions = [
     {
@@ -56,7 +57,8 @@ var questions = [
 
     },
 ]
-
+const correct_bonus = 10; 
+const max_questions = 5;
 
 // this function will start the game
 function startGame(){
