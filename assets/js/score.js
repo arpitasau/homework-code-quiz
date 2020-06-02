@@ -19,7 +19,7 @@ function submitHighScore(event){
   };
  highScore.push(recentScore);
  localStorage.setItem("highScore", JSON.stringify(highScore));
- location.href = "home.html";
+ location.href = "index.html";
 
 
 };
