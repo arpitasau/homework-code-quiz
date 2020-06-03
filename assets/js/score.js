@@ -12,11 +12,14 @@ submitScoreBtn.addEventListener("click",submitHighScore);
 
 function submitHighScore(event){
     event.preventDefault();
-
+    if (userInitial.value === "") {
+      return;
+    };
   var recentScore = {
     recentScore : score,
     name : userInitial.value,
   };
+  
  highScore.push(recentScore);
  localStorage.setItem("highScore", JSON.stringify(highScore));
  location.href = "index.html";
