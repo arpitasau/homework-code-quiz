@@ -103,7 +103,8 @@ options.forEach(option => {
             incrementScore(correctBonus);
             showResultsCorrect.innerText = "Correct";
         } else {
-            showResultsInCorrect.innerText = "Incorrect";   
+            showResultsInCorrect.innerText = "Incorrect"; 
+            totalTime -= 5; 
         }
         setTimeout(function() {
             showResultsCorrect.innerText = '';
