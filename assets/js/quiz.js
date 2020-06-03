@@ -122,7 +122,7 @@ function setTimer() {
         seconds = "0" + seconds;
     }
     timer.innerText = minutes + ':' + seconds;
-    if(minutes == "0" && seconds == "00") {  
+    if(minutes == "0" && seconds == "00" || minutes < "0" && seconds < "00") {  
         clearInterval(interval);
         totalTime = 0;
         return window.location.assign("score.html");
